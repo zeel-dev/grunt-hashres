@@ -22,7 +22,8 @@ exports.hashAndSub = function(grunt, options) {
       nameToHashedName = {},
       nameToNameSearch = {},
       formatter        = null,
-      searchFormatter  = null;
+      searchFormatter  = null,
+      requireTpl       = '';
 
   grunt.log.debug('files: ' + options.files);
   grunt.log.debug('Using encoding ' + encoding);
@@ -32,6 +33,7 @@ exports.hashAndSub = function(grunt, options) {
   formatter = utils.compileFormat(fileNameFormat);
   searchFormatter = utils.compileSearchFormat(fileNameFormat);
 
+  var _src;
   if (options.files) {
     options.files.forEach(function(f) {
       f.src.forEach(function(src) {
@@ -54,14 +56,28 @@ exports.hashAndSub = function(grunt, options) {
         nameToNameSearch[fileName] = nameSearch;
 
         // Renaming the file
-        if (renameFiles) {
-          fs.renameSync(src, path.resolve(path.dirname(src), renamed));
-        }
+        // if (renameFiles) {
+          // fs.renameSync(src, path.resolve(path.dirname(src), renamed));
+          // require( 'child_process' ).exec( 'cp ' + src + ' ' + path.resolve(path.dirname(src), renamed));
+        var hashedPath = path.resolve(path.dirname(src), renamed);
+        grunt.file.copy( src, hashedPath );
+        // }
         grunt.log.write(src + ' ').ok(renamed);
+
+        var jsDir = src.substring( 0, src.indexOf( '/js/' ) + 4 );
+        var requireDependencyName = src.substring( jsDir.length, src.indexOf( '.' ));
+        var requireAssetPath = hashedPath.substring( hashedPath.indexOf( '/assets/' ), hashedPath.length - 3 );
+        requireTpl += " '"+requireDependencyName+"': '"+requireAssetPath+"',";
+        _src = src;
       });
 
-      // sort by length 
-      // It is very useful when we have bar.js and foo-bar.js 
+      var tplDir = 'application/views/3/extra/requirejs/';
+      var assetCategory = _src.indexOf( '/3/' ) > -1 ? 'website' : 'cms';
+
+      grunt.file.write( tplDir + 'hashed.'+assetCategory+'.tpl', requireTpl );
+
+      // sort by length
+      // It is very useful when we have bar.js and foo-bar.js
       // @crodas
       var files = [];
       for (var name in nameToHashedName) {
@@ -82,7 +98,7 @@ exports.hashAndSub = function(grunt, options) {
 
           grunt.log.debug('Substituting ' + nameToNameSearch[value[0]] + ' by ' + value[1])
           destContents = destContents.replace(
-                new RegExp(nameToNameSearch[value[0]], "g"), 
+                new RegExp(nameToNameSearch[value[0]], "g"),
                 value[1]
             );
         });

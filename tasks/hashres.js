@@ -22,8 +22,8 @@ module.exports = function(grunt) {
     });
 
     // Required properties: 'src' and 'dest'
-    this.requiresConfig(this.name + '.' + this.target + '.src');
-    this.requiresConfig(this.name + '.' + this.target + '.dest');
+    // this.requiresConfig(this.name + '.' + this.target + '.src');
+    // this.requiresConfig(this.name + '.' + this.target + '.dest');
     helper.hashAndSub(grunt, {
       files: this.files,
       src           : options.src,
