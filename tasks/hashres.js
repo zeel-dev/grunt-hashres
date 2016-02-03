@@ -19,7 +19,8 @@ module.exports = function(grunt) {
       fileNameFormat : '${hash}.${name}.cache.${ext}',
       encoding       : 'utf8',
       renameFiles    : true,
-      mapPath        : null
+      mapPath        : null,
+      prefixMapFile  : ''
     });
 
 
@@ -29,6 +30,7 @@ module.exports = function(grunt) {
     helper.hashAndSub(grunt, {
       files         : this.files,
       mapPath       : options.mapPath,
+      prefixMapFile : options.prefixMapFile,
       src           : options.src,
       dest          : options.dest,
       encoding      : options.encoding,

@@ -20,6 +20,7 @@ exports.hashAndSub = function(grunt, options) {
       fileNameFormat   = options.fileNameFormat,
       renameFiles      = options.renameFiles,
       mapPath          = options.mapPath,
+      prefixMapFile    = options.prefixMapFile,
       nameToHashedName = {},
       nameToNameSearch = {},
       formatter        = null,
@@ -69,7 +70,7 @@ exports.hashAndSub = function(grunt, options) {
         var jsDir = src.substring( 0, src.indexOf( '/js/' ) + 4 );
         var requireDependencyName = src.substring( jsDir.length, src.indexOf( '.' ));
         var requireAssetPath = hashedPath.substring( hashedPath.indexOf( '/assets/' ), hashedPath.length - 3 );
-        requireTpl += " '" + requireDependencyName + "': '" + requireAssetPath + "',\n";
+        requireTpl += " '" + prefixMapFile + requireDependencyName + "': '" + requireAssetPath + "',\n";
 
         if ( requireDependencyName == 'chat/old' ) {
           requireTpl += " chat: '" + requireAssetPath + "',\n";
