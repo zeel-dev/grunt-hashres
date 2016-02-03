@@ -19,6 +19,7 @@ exports.hashAndSub = function(grunt, options) {
       encoding         = options.encoding,
       fileNameFormat   = options.fileNameFormat,
       renameFiles      = options.renameFiles,
+      mapPath          = options.mapPath,
       nameToHashedName = {},
       nameToNameSearch = {},
       formatter        = null,
@@ -73,10 +74,7 @@ exports.hashAndSub = function(grunt, options) {
         _src = src;
       });
 
-      var tplDir = 'application/views/3/extra/requirejs/';
-      var assetCategory = _src.indexOf( '/3/' ) > -1 ? 'website' : 'cms';
-
-      grunt.file.write( tplDir + 'hashed.'+assetCategory+'.tpl', requireTpl );
+      grunt.file.write( mapPath, requireTpl );
 
       // sort by length
       // It is very useful when we have bar.js and foo-bar.js

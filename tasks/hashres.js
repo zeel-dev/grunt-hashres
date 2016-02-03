@@ -25,12 +25,13 @@ module.exports = function(grunt) {
     // this.requiresConfig(this.name + '.' + this.target + '.src');
     // this.requiresConfig(this.name + '.' + this.target + '.dest');
     helper.hashAndSub(grunt, {
-      files: this.files,
+      files         : this.files,
       src           : options.src,
       dest          : options.dest,
       encoding      : options.encoding,
       fileNameFormat: options.fileNameFormat,
-      renameFiles   : options.renameFiles
+      renameFiles   : options.renameFiles,
+      mapPath       : options.mapPath
     });
   });
 
