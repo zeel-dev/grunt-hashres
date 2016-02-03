@@ -16,20 +16,19 @@ module.exports = function(grunt) {
 
     // Merging options with defaults
     var options = this.options({
-      fileNameFormat: '${hash}.${name}.cache.${ext}',
-      encoding      : 'utf8',
-      renameFiles   : true
+      fileNameFormat : '${hash}.${name}.cache.${ext}',
+      encoding       : 'utf8',
+      renameFiles    : true,
+      mapPath        : null
     });
 
-
-    grunt.log.debug('config of mapPath: ' + this.mapPath);
 
     // Required properties: 'src' and 'dest'
     // this.requiresConfig(this.name + '.' + this.target + '.src');
     // this.requiresConfig(this.name + '.' + this.target + '.dest');
     helper.hashAndSub(grunt, {
       files         : this.files,
-      mapPath       : this.mapPath,
+      mapPath       : options.mapPath,
       src           : options.src,
       dest          : options.dest,
       encoding      : options.encoding,
