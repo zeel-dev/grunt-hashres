@@ -69,9 +69,12 @@ exports.hashAndSub = function(grunt, options) {
         var jsDir = src.substring( 0, src.indexOf( '/js/' ) + 4 );
         var requireDependencyName = src.substring( jsDir.length, src.indexOf( '.' ));
         var requireAssetPath = hashedPath.substring( hashedPath.indexOf( '/assets/' ), hashedPath.length - 3 );
-        requireTpl += " '"+requireDependencyName+"': '"+requireAssetPath+"',\n";
-        if ( requireDependencyName == 'chat/old' )
-          requireTpl += " chat: '"+requireAssetPath+"',\n";
+        requireTpl += " '" + requireDependencyName + "': '" + requireAssetPath + "',\n";
+
+        if ( requireDependencyName == 'chat/old' ) {
+          requireTpl += " chat: '" + requireAssetPath + "',\n";
+        }
+
         _src = src;
       });
 

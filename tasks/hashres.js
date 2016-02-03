@@ -21,6 +21,9 @@ module.exports = function(grunt) {
       renameFiles   : true
     });
 
+
+    grunt.log.debug('config of mapPath: ' + this.mapPath);
+
     // Required properties: 'src' and 'dest'
     // this.requiresConfig(this.name + '.' + this.target + '.src');
     // this.requiresConfig(this.name + '.' + this.target + '.dest');
