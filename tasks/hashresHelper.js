@@ -29,6 +29,7 @@ exports.hashAndSub = function(grunt, options) {
   grunt.log.debug('files: ' + options.files);
   grunt.log.debug('Using encoding ' + encoding);
   grunt.log.debug('Using fileNameFormat ' + fileNameFormat);
+  grunt.log.debug('Using mapPath ' + mapPath);
   grunt.log.debug(renameFiles ? 'Renaming files' : 'Not renaming files');
 
   formatter = utils.compileFormat(fileNameFormat);
@@ -74,6 +75,8 @@ exports.hashAndSub = function(grunt, options) {
         _src = src;
       });
 
+
+      grunt.log.debug('Writing map path to ' + requireTpl);
       grunt.file.write( mapPath, requireTpl );
 
       // sort by length
