@@ -20,12 +20,14 @@ exports.hashAndSub = function(grunt, options) {
       fileNameFormat   = options.fileNameFormat,
       renameFiles      = options.renameFiles,
       mapPath          = options.mapPath,
-      prefixMapFile    = options.prefixMapFile,
+      startFile        = options.startFile || '',
+      endFile          = options.endFile   || '',
+      getCacheLine     = options.getCacheLine,
       nameToHashedName = {},
       nameToNameSearch = {},
       formatter        = null,
       searchFormatter  = null,
-      requireTpl       = '';
+      requireTpl       = startFile;
 
   grunt.log.debug('files: ' + options.files);
   grunt.log.debug('Using encoding ' + encoding);
@@ -67,21 +69,14 @@ exports.hashAndSub = function(grunt, options) {
         // }
         grunt.log.write(src + ' ').ok(renamed);
 
-        var jsDir = src.substring( 0, src.indexOf( '/js/' ) + 4 );
-        var requireDependencyName = src.substring( jsDir.length, src.indexOf( '.' ));
-        var requireAssetPath = hashedPath.substring( hashedPath.indexOf( '/assets/' ), hashedPath.length - 3 );
-        requireTpl += " '" + prefixMapFile + requireDependencyName + "': '" + requireAssetPath + "',\n";
-
-        if ( requireDependencyName == 'chat/old' ) {
-          requireTpl += " chat: '" + requireAssetPath + "',\n";
-        }
+        requireTpl += getCacheLine( src, hashedPath );
 
         _src = src;
       });
 
 
-      grunt.log.debug('Writing map path to ' + requireTpl);
-      grunt.file.write( mapPath, requireTpl );
+      grunt.log.debug('Writing map path to ' + mapPath );
+      grunt.file.write( mapPath, requireTpl + endFile );
 
       // sort by length
       // It is very useful when we have bar.js and foo-bar.js
