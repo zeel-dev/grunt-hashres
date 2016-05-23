@@ -20,8 +20,8 @@ exports.hashAndSub = function(grunt, options) {
       fileNameFormat   = options.fileNameFormat,
       renameFiles      = options.renameFiles,
       mapPath          = options.mapPath,
-      startFile        = options.startFile || '',
-      endFile          = options.endFile   || '',
+      startFile        = options.startFile,
+      endFile          = options.endFile,
       getCacheLine     = options.getCacheLine,
       nameToHashedName = {},
       nameToNameSearch = {},
@@ -29,7 +29,6 @@ exports.hashAndSub = function(grunt, options) {
       searchFormatter  = null,
       requireTpl       = startFile;
 
-  grunt.log.debug('files: ' + options.files);
   grunt.log.debug('Using encoding ' + encoding);
   grunt.log.debug('Using fileNameFormat ' + fileNameFormat);
   grunt.log.debug('Using mapPath ' + mapPath);
